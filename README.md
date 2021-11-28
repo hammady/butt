@@ -20,6 +20,9 @@ inspect the generated id/name. If you cannot run BUTT on the host, you can do tr
 with the id until you find a correct recording. If there is a better way to do this,
 please submit an issue/PR here. 
 
+Finally, do not forget to change the Shoutcast streaming server parameters in the last
+section of the file, especially the password.
+
 ```ini
 dev_remember = 0 # by id
 dev_remember = 1 # by name
