@@ -19,7 +19,8 @@ RUN apt-get update && \
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 RUN addgroup --gid $GROUP_ID butt && \
-    adduser --uid $USER_ID --gid $GROUP_ID --system --home /home/butt butt
+    adduser --uid $USER_ID --gid $GROUP_ID --system --home /home/butt butt && \
+    usermod -aG audio butt
 WORKDIR /home/butt
 USER butt
 
