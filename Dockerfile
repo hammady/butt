@@ -22,13 +22,15 @@ RUN addgroup --gid $GROUP_ID butt && \
     adduser --uid $USER_ID --gid $GROUP_ID --system --home /home/butt butt && \
     usermod -aG audio butt
 WORKDIR /home/butt
-USER butt
 
 ARG BUTT_VERSION=0.1.32
-RUN curl -o butt.tgz https://netactuate.dl.sourceforge.net/project/butt/butt/butt-$BUTT_VERSION/butt-$BUTT_VERSION.tar.gz && \
-    tar xf butt.tgz && \
-    rm butt.tgz && \
-    cd butt-$BUTT_VERSION && \
+ENV BUTT_VERSION=$BUTT_VERSION
+COPY butt-$BUTT_VERSION /home/butt/butt-$BUTT_VERSION   
+RUN chown -R butt:butt butt-$BUTT_VERSION
+
+USER butt
+  
+RUN cd butt-$BUTT_VERSION && \
     ./configure --disable-aac --prefix=$PWD && \
     make && \
     make install
@@ -37,4 +39,4 @@ COPY butt-settings.ini /home/butt
 
 ENV DISPLAY :0
 
-CMD /home/butt/butt-0.1.32/bin/butt -c /home/butt/butt-settings.ini
+CMD /home/butt/butt-$BUTT_VERSION/bin/butt -c /home/butt/butt-settings.ini
