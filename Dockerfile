@@ -17,16 +17,14 @@ RUN apt-get update && \
         libssl-dev
 
 ARG USER_ID=1000
-ARG GROUP_ID=1000
-RUN addgroup --gid $GROUP_ID butt && \
-    adduser --uid $USER_ID --gid $GROUP_ID --system --home /home/butt butt && \
+RUN adduser --uid $USER_ID --system --home /home/butt butt && \
     usermod -aG audio butt
 WORKDIR /home/butt
 
 ARG BUTT_VERSION=0.1.32
 ENV BUTT_VERSION=$BUTT_VERSION
 COPY butt-$BUTT_VERSION /home/butt/butt-$BUTT_VERSION   
-RUN chown -R butt:butt butt-$BUTT_VERSION
+RUN chown -R butt butt-$BUTT_VERSION
 
 USER butt
   

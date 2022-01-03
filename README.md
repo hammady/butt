@@ -34,17 +34,15 @@ dev_name = USB Audio Device: - (hw:2,0) [ALSA] # device name
 
 Build using docker. There are 3 arguments to the build command:
 - `USER_ID` which forwards the same user id running the command
-- `GROUP_ID` which forwards the first group id for the same user running the command
-- `BUTT_VERSION` defaults to 0.1.32, but you can change it to any version
+- `BUTT_VERSION` defaults to 0.1.32, and should match the vendored version
 
-The build process creates a corresponding user matching the uid and gid of the user
+The build process creates a corresponding user matching the uid of the user
 that builds (and probably runs with volume mounts) the container so that generated
 files belong to the host user.
 
 ```bash
 docker build . -t butt:0.1.32 \
     --build-arg USER_ID=$UID \
-    --build-arg GROUP_ID=${GROUPS[0]} \
     --build-arg BUTT_VERSION=0.1.32
 ```
 
@@ -63,4 +61,5 @@ docker run -d \
 The most notable argument above is the `-v` which mounts a host path inside
 the container so that generated logs, recordings, stream titles are all read/written
 to the host. Note also that `--device /dev/snd` is important as it makes the audio
-devices on the host available to the container.
+devices on the host available to the container. This has been tested on Ubuntu.
+Windows and Macos hosts are not supported.
