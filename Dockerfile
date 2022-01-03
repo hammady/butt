@@ -3,7 +3,7 @@ LABEL maintainer "Hossam Hammady <github@hammady.net>"
 
 RUN apt-get update && \
     apt-get install -y \
-        build-essential \
+        build-essential autoconf automake m4 \
         curl \
         libfltk1.3-dev \
         portaudio19-dev \
