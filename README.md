@@ -1,6 +1,6 @@
 # butt-docker
 
-[![Docker](https://github.com/hammady/butt-docker/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/hammady/butt-docker/actions/workflows/docker-build-push.yml)
+[![Docker](https://github.com/hammady/butt-docker/workflows/Docker/badge.svg)](https://github.com/hammady/butt-docker/actions/workflows/docker-build-push.yml)
 
 [BUTT](http://danielnoethen.de/butt/) (Broadcast Using This Tool) in a Docker container.
 
@@ -8,7 +8,8 @@
 
 Docker (obviously!)
 
-## Configure
+## Development
+### Configure
 
 Edit the file `butt-settings.ini` or export from another BUTT installation.
 The default settings generate logs and create recordings
@@ -31,7 +32,7 @@ device = 1 # device id
 dev_name = USB Audio Device: - (hw:2,0) [ALSA] # device name
 ```
 
-## Build
+### Build
 
 Build using docker. There are 2 arguments to the build command:
 - `USER_ID` which forwards the same user id running the command
@@ -47,7 +48,7 @@ docker build . -t butt:0.1.33 \
     --build-arg BUTT_VERSION=0.1.33
 ```
 
-## Run
+### Run
 
 ```bash
 docker run -d \
@@ -80,3 +81,9 @@ You may override the `DISPLAY` environment variable to use a different display.
 Note also that `--device /dev/snd` is important as it makes the audio
 devices on the host available to the container. This has been tested on Ubuntu Linux.
 Windows and macOS hosts are not supported because docker does not run natively on them.
+
+## Production
+
+GitHub actions are configured to build and push a docker image.
+Visit [the package page](https://github.com/hammady/butt-docker/pkgs/container/butt)
+for more information.
