@@ -4,7 +4,7 @@ LABEL maintainer "Hossam Hammady <github@hammady.net>"
 RUN apt-get update && \
     apt-get install -y \
         build-essential autoconf automake m4 \
-        curl \
+        wget \
         libfltk1.3-dev \
         portaudio19-dev \
         libopus-dev \
@@ -31,7 +31,7 @@ ENV BUTT_VERSION=$BUTT_VERSION
 
 USER butt
 
-RUN curl -fSsqL -o butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/butt/files/butt/butt-$BUTT_VERSION/butt-$BUTT_VERSION.tar.gz/download && \
+RUN wget -O butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/butt/files/butt/butt-$BUTT_VERSION/butt-$BUTT_VERSION.tar.gz/download && \
     tar -xzf butt-$BUTT_VERSION.tar.gz && \
     rm -f butt-$BUTT_VERSION.tar.gz && \
     cd butt-$BUTT_VERSION && \
