@@ -9,7 +9,7 @@ Docker (obviously!)
 ## Configure
 
 Edit the file `butt-settings.ini` or export from another BUTT installation.
-The default settings reads stream title, generate logs and create recordings
+The default settings generate logs and create recordings
 in `/butt`. You will probably need to mount this container path to the host
 (see the `-v` argument below). Make sure the host path exists and contains
 a sub-directory: `recordings`, or change it as appropriate.
@@ -20,8 +20,7 @@ inspect the generated id/name. If you cannot run BUTT on the host, you can do tr
 with the id until you find a correct recording. If there is a better way to do this,
 please submit an issue/PR here. 
 
-Finally, do not forget to change the Shoutcast streaming server parameters in the last
-section of the file, especially the password.
+Other settings can be passed as environment variables, see the run section below.
 
 ```ini
 dev_remember = 0 # by id
@@ -53,16 +52,29 @@ docker run -d \
     --restart always \
     --name butt \
     -v $HOME/butt:/butt \
-    --device /dev/snd \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    --device /dev/snd \
     -p 1256:1256 \
+    -e BUTT_SERVER_NAME=MyServer \
+    -e BUTT_SERVER_TYPE=0 \
+    -e BUTT_SERVER_ADDRESS=us2.internet-radio.com \
+    -e BUTT_SERVER_PORT=8164 \
+    -e BUTT_SERVER_PASSWORD=REDACTED \
+    -e BUTT_DEVICE_ID=1 \
+    -e BUTT_SAMPLE_RATE=44100 \
+    -e BUTT_BITRATE=64 \
+    -e BUTT_CHANNELS=1 \
+    -e BUTT_CODEC=mp3 \
+    -e BUTT_SILENCE_LEVEL=54.000000 \
+    -e BUTT_SIGNAL_LEVEL=52.000000 \
     butt:0.1.33
 ```
 
 The most notable argument above is the `-v` which mounts a host path inside
 the container so that generated logs, recordings, stream titles are all read/written
 to the host. The other mount `-v /tmp/.X11-unix:/tmp/.X11-unix:rw` is also required
-for X forwarding to work (to display BUTT on the main display).
+for X forwarding to work (to display BUTT on the main display, requires a locally running X server).
+You may override the `DISPLAY` environment variable to use a different display.
 Note also that `--device /dev/snd` is important as it makes the audio
 devices on the host available to the container. This has been tested on Ubuntu.
 Windows and Macos hosts are not supported.

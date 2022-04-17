@@ -14,13 +14,15 @@ RUN apt-get update && \
         libflac-dev \
         libdbus-1-dev \
         libsamplerate0-dev \
-        libssl-dev
+        libssl-dev \
+        gettext
 
 ARG USER_ID=1000
 RUN adduser --uid $USER_ID --system --home /home/butt butt && \
     usermod -aG audio butt
 WORKDIR /home/butt
 
+COPY prepare-butt.sh /home/butt
 COPY butt-settings.ini /home/butt
 RUN chown -R butt /home/butt
 
@@ -39,4 +41,5 @@ RUN curl -fSsqL -o butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/bu
 
 ENV DISPLAY :0
 
-CMD /home/butt/butt-$BUTT_VERSION/bin/butt -c /home/butt/butt-settings.ini
+ENTRYPOINT [ "/home/butt/prepare-butt.sh" ]
+CMD [ "bash", "-c", "/home/butt/butt-$BUTT_VERSION/bin/butt" ]
