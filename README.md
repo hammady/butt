@@ -34,16 +34,16 @@ dev_name = USB Audio Device: - (hw:2,0) [ALSA] # device name
 
 Build using docker. There are 3 arguments to the build command:
 - `USER_ID` which forwards the same user id running the command
-- `BUTT_VERSION` defaults to 0.1.32, and should match the vendored version
+- `BUTT_VERSION` defaults to 0.1.33, and should match the vendored version
 
 The build process creates a corresponding user matching the uid of the user
 that builds (and probably runs with volume mounts) the container so that generated
 files belong to the host user.
 
 ```bash
-docker build . -t butt:0.1.32 \
+docker build . -t butt:0.1.33 \
     --build-arg USER_ID=$UID \
-    --build-arg BUTT_VERSION=0.1.32
+    --build-arg BUTT_VERSION=0.1.33
 ```
 
 ## Run
@@ -52,14 +52,17 @@ docker build . -t butt:0.1.32 \
 docker run -d \
     --restart always \
     --name butt \
-    --net=host \
-    --device /dev/snd \
     -v $HOME/butt:/butt \
-    butt:0.1.32
+    --device /dev/snd \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    -p 1256:1256 \
+    butt:0.1.33
 ```
 
 The most notable argument above is the `-v` which mounts a host path inside
 the container so that generated logs, recordings, stream titles are all read/written
-to the host. Note also that `--device /dev/snd` is important as it makes the audio
+to the host. The other mount `-v /tmp/.X11-unix:/tmp/.X11-unix:rw` is also required
+for X forwarding to work (to display BUTT on the main display).
+Note also that `--device /dev/snd` is important as it makes the audio
 devices on the host available to the container. This has been tested on Ubuntu.
 Windows and Macos hosts are not supported.
