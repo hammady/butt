@@ -35,7 +35,7 @@ RUN wget -O butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/butt/file
     tar -xzf butt-$BUTT_VERSION.tar.gz && \
     rm -f butt-$BUTT_VERSION.tar.gz && \
     cd butt-$BUTT_VERSION && \
-    ./configure --disable-aac --prefix=$PWD && \
+    ./configure --with-client --disable-aac --prefix=$PWD && \
     make && \
     make install
 
