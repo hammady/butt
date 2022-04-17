@@ -1,5 +1,7 @@
 # butt-docker
 
+[![Docker](https://github.com/hammady/butt-docker/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/hammady/butt-docker/actions/workflows/docker-build-push.yml)
+
 [BUTT](http://danielnoethen.de/butt/) (Broadcast Using This Tool) in a Docker container.
 
 ## System requirements
