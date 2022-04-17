@@ -31,7 +31,7 @@ dev_name = USB Audio Device: - (hw:2,0) [ALSA] # device name
 
 ## Build
 
-Build using docker. There are 3 arguments to the build command:
+Build using docker. There are 2 arguments to the build command:
 - `USER_ID` which forwards the same user id running the command
 - `BUTT_VERSION` defaults to 0.1.33, and should match the vendored version
 
@@ -70,11 +70,11 @@ docker run -d \
     butt:0.1.33
 ```
 
-The most notable argument above is the `-v` which mounts a host path inside
+The most notable argument above is the first `-v` which mounts a host path inside
 the container so that generated logs, recordings, stream titles are all read/written
 to the host. The other mount `-v /tmp/.X11-unix:/tmp/.X11-unix:rw` is also required
 for X forwarding to work (to display BUTT on the main display, requires a locally running X server).
 You may override the `DISPLAY` environment variable to use a different display.
 Note also that `--device /dev/snd` is important as it makes the audio
-devices on the host available to the container. This has been tested on Ubuntu.
-Windows and Macos hosts are not supported.
+devices on the host available to the container. This has been tested on Ubuntu Linux.
+Windows and macOS hosts are not supported because docker does not run natively on them.
