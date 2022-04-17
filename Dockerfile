@@ -22,24 +22,25 @@ RUN adduser --uid $USER_ID --system --home /home/butt butt && \
     usermod -aG audio butt
 WORKDIR /home/butt
 
-COPY prepare-butt.sh /home/butt
-COPY butt-settings.ini /home/butt
-RUN chown -R butt /home/butt
-
 ARG BUTT_VERSION=0.1.33
 ENV BUTT_VERSION=$BUTT_VERSION
-
-USER butt
 
 RUN wget -O butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/butt/files/butt/butt-$BUTT_VERSION/butt-$BUTT_VERSION.tar.gz/download && \
     tar -xzf butt-$BUTT_VERSION.tar.gz && \
     rm -f butt-$BUTT_VERSION.tar.gz && \
     cd butt-$BUTT_VERSION && \
-    ./configure --with-client --disable-aac --prefix=$PWD && \
+    ./configure --with-client --disable-aac && \
     make && \
     make install
+
+COPY prepare-butt.sh /home/butt
+COPY butt-settings.ini /home/butt
+
+RUN chown -R butt /home/butt
+
+USER butt
 
 ENV DISPLAY :0
 
 ENTRYPOINT [ "/home/butt/prepare-butt.sh" ]
-CMD [ "bash", "-c", "/home/butt/butt-$BUTT_VERSION/bin/butt" ]
+CMD [ "bash", "-c", "/usr/local/bin/butt" ]
