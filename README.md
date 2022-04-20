@@ -11,19 +11,13 @@ Docker (obviously!)
 ## Development
 ### Configure
 
-Edit the file `butt-settings.ini` or export from another BUTT installation.
-The default settings generate logs and create recordings
-in `/butt`. You will probably need to mount this container path to the host
-(see the `-v` argument below). Make sure the host path exists and contains
-a sub-directory: `recordings`, or change it as appropriate.
+Inspect the file `butt-settings.ini` for default values and those that can be overridden.
 
-Another important setting is the audio device id/name. One way to identify this
+One important setting is the audio device id/name. One way to identify this
 is to run BUTT on the host (not inside a container), save/export the settings and
 inspect the generated id/name. If you cannot run BUTT on the host, you can do trial and error
 with the id until you find a correct recording. If there is a better way to do this,
 please submit an issue/PR here. 
-
-Other settings can be passed as environment variables, see the run section below.
 
 ```ini
 dev_remember = 0 # by id
@@ -31,6 +25,8 @@ dev_remember = 1 # by name
 device = 1 # device id
 dev_name = USB Audio Device: - (hw:2,0) [ALSA] # device name
 ```
+
+Other settings can be passed as environment variables, see the run section below.
 
 ### Build
 
@@ -54,7 +50,7 @@ docker build . -t butt:0.1.33 \
 docker run -d \
     --restart always \
     --name butt \
-    -v $HOME/butt:/butt \
+    -v $HOME/butt:/data \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
     --device /dev/snd \
     -p 1256:1256 \
@@ -74,13 +70,14 @@ docker run -d \
 ```
 
 The most notable argument above is the first `-v` which mounts a host path inside
-the container so that generated logs, recordings, stream titles are all read/written
+the container so that generated logs and recordings are all read/written
 to the host. The other mount `-v /tmp/.X11-unix:/tmp/.X11-unix:rw` is also required
 for X forwarding to work (to display BUTT on the main display, requires a locally running X server).
 You may override the `DISPLAY` environment variable to use a different display.
 Note also that `--device /dev/snd` is important as it makes the audio
 devices on the host available to the container. This has been tested on Ubuntu Linux.
 Windows and macOS hosts are not supported because docker does not run natively on them.
+Note that you cannot run BUTT in swarm mode because it doesn't support devices or privileged mode.
 
 ## Production
 

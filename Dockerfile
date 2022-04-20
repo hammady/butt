@@ -39,7 +39,7 @@ COPY butt-settings.ini /home/butt
 RUN chown -R butt /home/butt
 
 USER butt
-
+VOLUME [ "/data" ]
 ENV DISPLAY :0
 
 ENTRYPOINT [ "/home/butt/prepare-butt.sh" ]

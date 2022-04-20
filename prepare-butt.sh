@@ -4,4 +4,7 @@
 
 envsubst < /home/butt/butt-settings.ini > /home/butt/.buttrc
 
+recordings=/data/recordings
+[ -d "$recordings" ] || mkdir "$recordings"
+
 exec "$@"
