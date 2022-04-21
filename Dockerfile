@@ -22,7 +22,7 @@ RUN adduser --uid $USER_ID --system --home /home/butt butt && \
     usermod -aG audio butt
 WORKDIR /home/butt
 
-ARG BUTT_VERSION=0.1.33
+ARG BUTT_VERSION=0.1.34
 ENV BUTT_VERSION=$BUTT_VERSION
 
 RUN wget -O butt-$BUTT_VERSION.tar.gz https://sourceforge.net/projects/butt/files/butt/butt-$BUTT_VERSION/butt-$BUTT_VERSION.tar.gz/download && \

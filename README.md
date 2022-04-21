@@ -32,16 +32,16 @@ Other settings can be passed as environment variables, see the run section below
 
 Build using docker. There are 2 arguments to the build command:
 - `USER_ID` which forwards the same user id running the command
-- `BUTT_VERSION` defaults to 0.1.33, and should match the vendored version
+- `BUTT_VERSION` defaults to 0.1.34, and should match the vendored version
 
 The build process creates a corresponding user matching the uid of the user
 that builds (and probably runs with volume mounts) the container so that generated
 files belong to the host user.
 
 ```bash
-docker build . -t butt:0.1.33 \
+docker build . -t butt:0.1.34 \
     --build-arg USER_ID=$UID \
-    --build-arg BUTT_VERSION=0.1.33
+    --build-arg BUTT_VERSION=0.1.34
 ```
 
 ### Run
@@ -66,7 +66,7 @@ docker run -d \
     -e BUTT_CODEC=mp3 \
     -e BUTT_SILENCE_LEVEL=54.000000 \
     -e BUTT_SIGNAL_LEVEL=52.000000 \
-    butt:0.1.33
+    butt:0.1.34
 ```
 
 The most notable argument above is the first `-v` which mounts a host path inside
