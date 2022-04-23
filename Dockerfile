@@ -41,6 +41,7 @@ RUN chown -R butt /home/butt
 USER butt
 VOLUME [ "/data" ]
 ENV DISPLAY :0
+EXPOSE 1256
 
 ENTRYPOINT [ "/home/butt/prepare-butt.sh" ]
-CMD [ "bash", "-c", "/usr/local/bin/butt" ]
+CMD [ "/usr/local/bin/butt", "-A", "-p", "1256" ]
