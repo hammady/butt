@@ -19,7 +19,8 @@ RUN apt-get update && \
 
 ARG USER_ID=1000
 RUN adduser --uid $USER_ID --system --home /home/butt butt && \
-    usermod -aG audio butt
+    usermod -aG audio,root butt && \
+    chmod g+w /etc
 WORKDIR /home/butt
 
 ARG BUTT_VERSION=0.1.34

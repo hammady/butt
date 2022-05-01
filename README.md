@@ -54,6 +54,7 @@ docker run -d \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
     --device /dev/snd \
     -p 1256:1256 \
+    -e BUTT_TIMEZONE=Canada/Eastern \
     -e BUTT_SERVER_NAME=MyServer \
     -e BUTT_SERVER_TYPE=0 \
     -e BUTT_SERVER_ADDRESS=us2.internet-radio.com \
@@ -78,6 +79,11 @@ Note also that `--device /dev/snd` is important as it makes the audio
 devices on the host available to the container. This has been tested on Ubuntu Linux.
 Windows and macOS hosts are not supported because docker does not run natively on them.
 Note that you cannot run BUTT in swarm mode because it doesn't support devices or privileged mode.
+
+Time zones are important for the recordings to be generated with correct file names.
+To set the time zone, use the `BUTT_TIMEZONE` environment variable.
+For a list of all timezones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+If not set, will default to UTC.
 
 ## Production
 
